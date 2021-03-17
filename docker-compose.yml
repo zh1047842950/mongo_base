@@ -1,0 +1,25 @@
+version: '3'
+services:
+  mongo_base:
+    container_name: "mongo_base"
+    image: a643af3b1e0e
+    ports:
+      - "9088:9088"
+      - "27017:27017"
+    expose:
+      - "9088"
+      - "27017"
+    volumes:
+      - "/e/WorkSpace/WebStorm/mongo_base:/workspace/mongo_base"
+    command:
+      - /bin/bash
+      - -c
+      - |
+        cd /workspace/mongo_base
+        ls
+        source /etc/profile
+        service mongodb start
+        pgrep mongo -l
+        npm i
+        pm2 start src/app.js --name mongo_base
+        tail -f /etc/profile
