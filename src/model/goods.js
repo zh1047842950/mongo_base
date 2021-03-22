@@ -6,15 +6,15 @@
 const { Schema } = require('../database')
 const mongoose = require('mongoose')
 
-const UserSchema = Schema({ name: String, tel: String, isDefault: Boolean })
+const GoodsSchema = Schema({ name: String, price: Number, location: String })
 
-const UserModel = mongoose.model('User', UserSchema)
+const GoodsModel = mongoose.model('Goods', GoodsSchema)
 
 const query = (res, data, next) => {
   let { page = '1', limit = '10' } = data
   page = parseInt(page)
   limit = parseInt(limit)
-  UserModel.find({}, function (err, docs) {
+  GoodsModel.find({}, function (err, docs) {
     if (err) return next(err)
     const { length } = docs
     res.send({
@@ -30,21 +30,21 @@ const query = (res, data, next) => {
 }
 
 const findById = (res, data, next) => {
-  UserModel.findById(data, function (err, docs) {
+  GoodsModel.findById(data, function (err, docs) {
     if (err) return next(err)
     res.send(docs)
   })
 }
 
 const insert = (res, data, next) => {
-  UserModel.create(data, function (err, docs) {
+  GoodsModel.create(data, function (err, docs) {
     if (err) return next(err)
     res.send(docs)
   })
 }
 
 const del = (res, data, next) => {
-  UserModel.deleteOne(data, function (err, docs) {
+  GoodsModel.deleteOne(data, function (err, docs) {
     if (err) return next(err)
     res.send(docs)
   })
@@ -52,14 +52,14 @@ const del = (res, data, next) => {
 
 const update = (res, data, next) => {
   const { id, ...userInf } = data
-  UserModel.updateOne({ _id: id }, userInf, function (err, docs) {
+  GoodsModel.updateOne({ _id: id }, userInf, function (err, docs) {
     if (err) return next(err)
     res.send(docs)
   })
 }
 
 module.exports = {
-  UserModel,
+  GoodsModel,
   query,
   findById,
   insert,

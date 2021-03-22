@@ -13,6 +13,10 @@
 
 卸载MongoDB命令：sudo apt-get --purge remove mongodb mongodb-clients mongodb-server
 
+docker run -itd --name mongo_db -p 27017:27017 mongo --auth
+docker exec -it mongo_db bash
+
+
 # 容器启动后进入容器、进入mongo shell配置数据库用户、密码
 # 启用认证
     mongod --auth
@@ -27,3 +31,5 @@
     需修改容器中mongodb的配置文件 /etc/mongod.conf
         将 bindIp: 127.0.0.1修改为 bindIp: 0.0.0.0
     保存、重启容器即可
+
+

@@ -1,16 +1,32 @@
 version: '3'
+networks:
+  lxj_net:
+    driver: bridge
 services:
-  mongo_base:
-    container_name: "mongo_base"
-    image: a643af3b1e0e
+  mongo_db:
+    image: bbfd3e575f12
+    container_name: mongo_db
+    restart: always
+    networks:
+      - lxj_net
     ports:
-      - "9088:9088"
-      - "27017:27017"
+      - 27017:27017
     expose:
-      - "9088"
-      - "27017"
+      - 27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+  mongo_base:
+    container_name: mongo_base
+    image: d8165341c612
+    networks:
+      - lxj_net
+    ports:
+      - 9088:9088
+    expose:
+      - 9088
     volumes:
-      - "/e/WorkSpace/WebStorm/mongo_base:/workspace/mongo_base"
+      - /e/WorkSpace/WebStorm/mongo_base:/workspace/mongo_base
     command:
       - /bin/bash
       - -c
@@ -18,8 +34,6 @@ services:
         cd /workspace/mongo_base
         ls
         source /etc/profile
-        service mongodb start
-        pgrep mongo -l
         npm i
         pm2 start src/app.js --name mongo_base
         tail -f /etc/profile
