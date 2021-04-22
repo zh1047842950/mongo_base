@@ -3,5 +3,5 @@
  * @date 2021-03-04 15:41
  */
 module.exports =  {
-  dbUri:'mongodb://admin:admin@172.23.0.3:27017/admin'
+  dbUri:'mongodb://root:123456@172.21.0.4:27017/admin'
 }
